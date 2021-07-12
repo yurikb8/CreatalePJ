@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/*背景色*/
+body{
+    background-color: #fffff0
+}
+
+
+/* waku */
+.flame14{
+margin-left:auto;
+margin-right:auto;
+padding: 1em;
+width: 40%;
+color: #606060;
+background-color: #fcf5e8;
+border: 2px solid #deb887;
+border-radius: 10px;
+}

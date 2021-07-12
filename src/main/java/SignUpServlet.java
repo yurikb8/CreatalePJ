@@ -1,7 +1,6 @@
 
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,42 +16,41 @@ public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//ローカル変数
 		String uname;
-		String mail1;
-		String mail2;
+		String mail;
 		String pass;
+		boolean mc;
 		
 		//Beansの生成
 		SignUpBean suBean = new SignUpBean();
 		
 		//htmlから値の受け取り
-		uname = redecode(request.getParameter("name"));
-		mail1 = redecode(request.getParameter("mail1"));
-		mail2 = redecode(request.getParameter("mail2"));
-		pass = redecode(request.getParameter("pass"));
+		uname = request.getParameter("name");
+		mail = request.getParameter("mail1");
+		pass = request.getParameter("pass");
 		
-		if(mail1 != mail2) {
+		//Beansに値をセット
+		suBean.setMail(mail);
+		suBean.setPass(pass);
+		suBean.setUname(uname);
+		
+		mc = suBean.mailcheck();
+		
+		if(mc==false) {
 			getServletContext().getRequestDispatcher("/ErrorInput.html").forward(request,response);
 			return;
 		}
 		
-		suBean.set_mail(mail1);
-		suBean.set_pass(passwd);
-		ctmBean.setI_name(i_name);
-		ctmBean.setI_address(i_address);
-		ctmBean.setI_tel(i_tel);
-		ctmBean.setI_date(i_date);
-		ctmBean.setI_new(i_new);
-		ctmBean.setI_cnt(i_cnt);
-		ctmBean.setI_kingaku(i_kingaku);
+		//Insertを実行
+		suBean.insert();
 	}
 	
-	String redecode(String str){
+	/*String redecode(String str){
 		String ret;
 		if(str==null || str.equals(""))
 			return null;
@@ -63,5 +61,6 @@ public class SignUpServlet extends HttpServlet {
 			}
 			return ret;
 		}
+	*/
 
 }
