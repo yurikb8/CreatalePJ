@@ -7,38 +7,39 @@
         
         <script type="text/javascript">
 		function check() {
-			if(document.getElementById("name").value === "") {
+			if(document.getElementByName("name").value === "") {
 				window.alert("ユーザー名を入力してください。");
       			return false;
       		}
       		
-      		if(document.getElementById("mail1").value === "") {
+      		if(document.getElementByName("mail1").value === "") {
       			window.alert("メールアドレスを入力してください。");
       			return false;
       		}
       		
-      		if(document.getElementById("password").value === "") {
+      		if(document.getElementByName("password").value === "") {
       			window.alert("パスワードを入力してください。");
       			return false;
       		}
       		
-      		if(document.getElementById("mail1").value !== document.getElementById("mail2").value){
+      		if(document.getElementByName("mail1").value !== document.getElementByName("mail2").value){
       			window.alert("メールアドレスが一致しません");
       			return false;
       		}
 		}
 	</script>
+
     </head>
     <body>
         <h3>Creatale</h3>
 		<div class="flame14">
 		<div style="text-align:center">
         <h1>新規登録</h1>
-        <form action ="SignUpServlet" method="post" onsubmit="return check()">
-            <p><label>名前　　　　　<input type="text" id="name"></label></p>
-            <p><label>eメール　　　<input type="text" id="mail1"></label></p>
-            <p><label>eメール　　　<input type="text" id="mail2"></label></p>
-            <p><label>パスワード　<input type="password" id="password"></label></p>
+        <form action ="SignUpServlet" method="post"onsubmit="return check()">
+            <p><label>名前　　　　　<input type="text" name="name"></label></p>
+            <p><label>eメール　　　<input type="text" name="mail1"></label></p>
+            <p><label>eメール　　　<input type="text" name="mail2"></label></p>
+            <p><label>パスワード　<input type="password" name="password"></label></p>
             <p id="text1"><input type="submit" value="登 録"></p>
         </div>
         </div>

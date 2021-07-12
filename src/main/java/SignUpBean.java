@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 public class SignUpBean {
 	
+	private int     countOfResults;
+	
 	private String mail;
 	private String uname;
 	private String pass;
@@ -47,8 +49,9 @@ public class SignUpBean {
 	}
 	
 	//mailが存在するかのチェック
-	public  boolean mailcheck() {
-		boolean mc = false;
+	public String mailcheck() {
+		String mc = "false";
+		
 		
 		Connection        con     = null;
 		String            sql     = null;
@@ -66,8 +69,8 @@ public class SignUpBean {
 	                        "root","kcsf");
 
 	        // SQL文の作成
-	            sql = "Select mail from user "+
-					 	"where mail = '?'";
+	            sql = "Select * from user "+
+					 	"where mail = ?";
 	            
 	       //PreparedStatementの発行
 	            preStmt = con.prepareStatement(sql);
@@ -78,12 +81,12 @@ public class SignUpBean {
 	         // SQL ステートメントの発行
 	            rs = preStmt.executeQuery();
 	            
-	            if(rs == null) {
-	            	mc = true;
-	            }else {
-	            	mc = false;
+	            for (countOfResults=0; rs.next(); countOfResults++);
+	            
+	            if(countOfResults == 0) {
+	            	mc = "true";
 	            }
-	            return mc;
+	            
 		}catch (Exception ex) {
             System.out.println("Exception: "+ex.getMessage());
         } finally {

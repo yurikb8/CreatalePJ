@@ -1,6 +1,7 @@
 
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class SignUpServlet
  */
-@WebServlet(description = "新規登録", urlPatterns = { "/SignUpServlet" })
+@WebServlet("/SignUpServlet")
 public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -19,12 +20,23 @@ public class SignUpServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Map<String, String[]> paramMap = request.getParameterMap();
+
+		System.out.println("param count: " + Integer.toString(paramMap.size()));
+		for (String key : paramMap.keySet()) {
+		    String[] values = paramMap.get(key);
+		    System.out.println(
+		            String.format("%s ===> %s",
+		                    key,
+		                    (values != null ? String.join(", ", values): "")
+		                    )
+		            );
+		}		
 		//ローカル変数
 		String uname;
 		String mail;
 		String pass;
-		boolean mc;
+		String mc;
 		
 		//Beansの生成
 		SignUpBean suBean = new SignUpBean();
@@ -32,16 +44,18 @@ public class SignUpServlet extends HttpServlet {
 		//htmlから値の受け取り
 		uname = request.getParameter("name");
 		mail = request.getParameter("mail1");
-		pass = request.getParameter("pass");
+		pass = request.getParameter("password");
 		
 		//Beansに値をセット
 		suBean.setMail(mail);
 		suBean.setPass(pass);
 		suBean.setUname(uname);
 		
+		System.out.println(mail);
+		
 		mc = suBean.mailcheck();
 		
-		if(mc==false) {
+		if(mc=="false") {
 			getServletContext().getRequestDispatcher("/ErrorInput.html").forward(request,response);
 			return;
 		}
@@ -62,5 +76,5 @@ public class SignUpServlet extends HttpServlet {
 			return ret;
 		}
 	*/
-
 }
+
