@@ -31,7 +31,7 @@ public class SignUpServlet extends HttpServlet {
 		                    (values != null ? String.join(", ", values): "")
 		                    )
 		            );
-		}		
+		}
 		//ローカル変数
 		String uname;
 		String mail;
